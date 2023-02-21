@@ -1,10 +1,12 @@
+import { supprimeContenuMain } from './login.js'
 window.addEventListener('DOMContentLoaded', () => {
   //Recupere la liste des travaux
-  recuperationListeTravaux()
+  // recuperationListeTravaux()
+  supprimeContenuMain()
   //on recupere la liste des catégories
-  creationContenerFiltre()
+  //creationContenerFiltre()
   //on creer les filtres pour les works
-  creationFiltres()
+  //creationFiltres()
 })
 
 //Recupere la liste des travaux
