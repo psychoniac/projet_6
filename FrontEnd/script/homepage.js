@@ -1,12 +1,14 @@
 import { supprimeContenuMain } from './login.js'
+import { genereFormLogin } from './login.js'
 window.addEventListener('DOMContentLoaded', () => {
   //Recupere la liste des travaux
-  // recuperationListeTravaux()
+  //recuperationListeTravaux()
   supprimeContenuMain()
   //on recupere la liste des catégories
   //creationContenerFiltre()
   //on creer les filtres pour les works
   //creationFiltres()
+  genereFormLogin()
 })
 
 //Recupere la liste des travaux
@@ -14,8 +16,7 @@ async function recuperationListeTravaux () {
   //Faire un fetch pour recuperer la liste des travaux
   let reponse = await fetch('http://localhost:5678/api/works')
   let listeTravaux = await reponse.json()
-  const arrayListe = Object.values(listeTravaux)
-  console.log(arrayListe)
+
   //on creer une boucle for sur l'array que nous renvoie fetch
   //pour pouvoir creer les balises HTML qu'il faut en fonction de la taille de l'array
   for (let index = 0; index < listeTravaux.length; index++) {
