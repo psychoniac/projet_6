@@ -1,14 +1,11 @@
-import { supprimeContenuMain } from './login.js'
-import { genereFormLogin } from './login.js'
 window.addEventListener('DOMContentLoaded', () => {
   //Recupere la liste des travaux
-  //recuperationListeTravaux()
-  supprimeContenuMain()
+  recuperationListeTravaux()
+
   //on recupere la liste des catégories
-  //creationContenerFiltre()
+  creationContenerFiltre()
   //on creer les filtres pour les works
-  //creationFiltres()
-  genereFormLogin()
+  creationFiltres()
 })
 
 //Recupere la liste des travaux

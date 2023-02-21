@@ -198,4 +198,57 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+/*Pages Login*/
+.contener_formulaire{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 10px;
+}
+#loginForm input[type="submit"]{
+height: 50px;
+	font-size: 1.2em;
+	border: none;
+	
+}
+input[type="email"]{
+	width: 379px;
+	height: 51px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	font-size: 1.2em;
+	border: none;
+	
+}
+input[type="password"]{
+	margin-top: 10px;
+	width: 379px;
+	height: 51px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	font-size: 1.2em;
+	border: none;
+	
+}
+#loginForm{
+	display: flex;
+	flex-direction: column;
+	
+}
+#loginForm label{
+	font-family:'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	color: #3D3D3D;
 
+}
+.passwordOublier{
+	font-family:'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	color: #3D3D3D;}
