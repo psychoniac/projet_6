@@ -1,8 +1,10 @@
 window.addEventListener('DOMContentLoaded', () => {
   //Recupere la liste des travaux
   recuperationListeTravaux()
-  //on recupere la liste des catégories pour créer les boutons filtres
-  recuperationCategories()
+  //on recupere la liste des catégories
+  creationContenerFiltre()
+  //on creer les filtres pour les works
+  creationFiltres()
 })
 
 //Recupere la liste des travaux
@@ -10,6 +12,8 @@ async function recuperationListeTravaux () {
   //Faire un fetch pour recuperer la liste des travaux
   let reponse = await fetch('http://localhost:5678/api/works')
   let listeTravaux = await reponse.json()
+  const arrayListe = Object.values(listeTravaux)
+  console.log(arrayListe)
   //on creer une boucle for sur l'array que nous renvoie fetch
   //pour pouvoir creer les balises HTML qu'il faut en fonction de la taille de l'array
   for (let index = 0; index < listeTravaux.length; index++) {
@@ -24,13 +28,16 @@ async function recuperationListeTravaux () {
     baliseFigcaption.innerText = listeTravaux[index].title
   }
 }
-
 //on creer une fonction qui va recuperer la liste des catégories
-async function recuperationCategories () {
+async function getCategories () {
+  //fonction fetch recuperation categories
   //on fait un fetch avec la methode par defaut GET
   let reponse = await fetch('http://localhost:5678/api/categories')
   let listeCategories = await reponse.json()
+  return listeCategories
+}
 
+function creationContenerFiltre () {
   //on creer un contener pour les filtres
   const contenerFiltre = document.createElement('div')
   //on injecte la class contenerFiltre
@@ -41,6 +48,9 @@ async function recuperationCategories () {
   let portfolioTitle = titles[1]
   //on place la div sous le titre
   portfolioTitle.after(contenerFiltre)
+}
+function creationFiltres () {
+  getCategories()
 
   for (let index = 0; index < listeCategories.length; index++) {
     //on cree un element button pour chaque objet de l'array
