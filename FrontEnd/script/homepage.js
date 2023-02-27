@@ -1,13 +1,31 @@
 window.addEventListener('DOMContentLoaded', () => {
   //Recupere la liste des travaux
   recuperationListeTravaux()
-
   //on recupere la liste des catégories
   creationContenerFiltre()
-  //on creer les filtres pour les works
-  creationFiltres()
+  //on recupere la liste des catégories et on creer les bouton
+  recuperationListeCategories()
 })
+//Recuperation liste categories
+async function recuperationListeCategories () {
+  let reponse = await fetch('http://localhost:5678/api/categories')
+  let listeCategories = await reponse.json()
 
+  //on boucle sur l'array listecategories pour créer un bouton par categories
+  for (let index = 0; index < listeCategories.length; index++) {
+    //on selectionne la div qui va contenir les filtres
+    let contenerFiltre = document.querySelector('.contenerFiltre')
+    //on créer le bouton
+    const filtre = document.createElement('button')
+    //on place les bouton dans le contener filtres
+    contenerFiltre.appendChild(filtre)
+    //on onjecte la class filtres au differents bouton
+    filtre.classList.add('filtres')
+    //on place le nom des categories dans les boutons
+    filtre.innerText = listeCategories[index].name
+    filtre.addEventListener('click', filtrageTravaux)
+  }
+}
 //Recupere la liste des travaux
 async function recuperationListeTravaux () {
   //Faire un fetch pour recuperer la liste des travaux
@@ -28,15 +46,7 @@ async function recuperationListeTravaux () {
     baliseFigcaption.innerText = listeTravaux[index].title
   }
 }
-//on creer une fonction qui va recuperer la liste des catégories
-async function getCategories () {
-  //fonction fetch recuperation categories
-  //on fait un fetch avec la methode par defaut GET
-  let reponse = await fetch('http://localhost:5678/api/categories')
-  let listeCategories = await reponse.json()
-  return listeCategories
-}
-
+//fonction qui génere le contener des boutons filtres
 function creationContenerFiltre () {
   //on creer un contener pour les filtres
   const contenerFiltre = document.createElement('div')
@@ -48,18 +58,9 @@ function creationContenerFiltre () {
   let portfolioTitle = titles[1]
   //on place la div sous le titre
   portfolioTitle.after(contenerFiltre)
+  return contenerFiltre
 }
-function creationFiltres () {
-  getCategories()
-
-  for (let index = 0; index < listeCategories.length; index++) {
-    //on cree un element button pour chaque objet de l'array
-    let filtreCategories = document.createElement('button')
-    //on place les categories apres le titre du portfolio
-    contenerFiltre.appendChild(filtreCategories)
-    //on defini le nom des filtres
-    filtreCategories.innerText = listeCategories[index].name
-    //on injecte la class filtres
-    filtreCategories.classList.add('filtres')
-  }
+//function filtrage
+function filtrageTravaux () {
+  console.log('hello')
 }
