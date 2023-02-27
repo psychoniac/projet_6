@@ -1,18 +1,21 @@
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   //Recupere la liste des travaux
   recuperationListeTravaux()
   //on recupere la liste des catégories
   creationContenerFiltre()
   //on recupere la liste des catégories et on creer les bouton
-  recuperationListeCategories()
+  const listeCategories = await recuperationListeCategories()
+  creationdesFiltres(listeCategories)
 })
 //Recuperation liste categories
 async function recuperationListeCategories () {
   let reponse = await fetch('http://localhost:5678/api/categories')
-  let listeCategories = await reponse.json()
-
+  const liste = await reponse.json()
+  return liste
+}
+function creationdesFiltres (Categories) {
   //on boucle sur l'array listecategories pour créer un bouton par categories
-  for (let index = 0; index < listeCategories.length; index++) {
+  for (let index = 0; index < Categories.length; index++) {
     //on selectionne la div qui va contenir les filtres
     let contenerFiltre = document.querySelector('.contenerFiltre')
     //on créer le bouton
@@ -22,20 +25,29 @@ async function recuperationListeCategories () {
     //on onjecte la class filtres au differents bouton
     filtre.classList.add('filtres')
     //on place le nom des categories dans les boutons
-    filtre.innerText = listeCategories[index].name
-
-    // let categoriesId = listeCategories[index].id
+    filtre.innerText = Categories[index].name
+    //on assigne un id a chaque bouton
+    //on place des écouteurs d'évenements sur chaque bouton
     filtre.addEventListener('click', function () {
-      if (listeCategories[index].id === 1) {
-        console.log('1')
-      } else if (listeCategories[index].id === 2) {
-        console.log('2')
-      } else if (listeCategories[index].id === 3) {
-        console.log('3')
-      }
+      console.log('hello')
     })
   }
+  const listeBoutonFiltres = document.querySelectorAll('.filtres')
+  listeBoutonFiltres[0].setAttribute('id', 1)
+  listeBoutonFiltres[1].setAttribute('id', 2)
+  listeBoutonFiltres[2].setAttribute('id', 3)
 }
+/*
+//fonction filtre
+function filtrage (Categories) {
+  if (Categories[index].id === 1) {
+    console.log('1')
+  } else if (Categories[index].id === 2) {
+    console.log('2')
+  } else if (Categories[index].id === 3) {
+    console.log('3')
+  }
+}*/
 //Recupere la liste des travaux
 async function recuperationListeTravaux () {
   //Faire un fetch pour recuperer la liste des travaux
@@ -62,11 +74,9 @@ function creationContenerFiltre () {
   //on injecte la class contenerFiltre
   contenerFiltre.classList.add('contenerFiltre')
   //on selectionne les h2 du dom
-  let titles = document.querySelectorAll('h2')
+  let titres = document.querySelectorAll('h2')
   //on selectionne le titre du portfolio
-  let portfolioTitle = titles[1]
+  let titrePortfolio = titres[1]
   //on place la div sous le titre
-  portfolioTitle.after(contenerFiltre)
+  titrePortfolio.after(contenerFiltre)
 }
-//function filtrage
-function filtrageTravaux () {}
