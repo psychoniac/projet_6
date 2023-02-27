@@ -23,7 +23,17 @@ async function recuperationListeCategories () {
     filtre.classList.add('filtres')
     //on place le nom des categories dans les boutons
     filtre.innerText = listeCategories[index].name
-    filtre.addEventListener('click', filtrageTravaux)
+
+    // let categoriesId = listeCategories[index].id
+    filtre.addEventListener('click', function () {
+      if (listeCategories[index].id === 1) {
+        console.log('1')
+      } else if (listeCategories[index].id === 2) {
+        console.log('2')
+      } else if (listeCategories[index].id === 3) {
+        console.log('3')
+      }
+    })
   }
 }
 //Recupere la liste des travaux
@@ -31,7 +41,6 @@ async function recuperationListeTravaux () {
   //Faire un fetch pour recuperer la liste des travaux
   let reponse = await fetch('http://localhost:5678/api/works')
   let listeTravaux = await reponse.json()
-
   //on creer une boucle for sur l'array que nous renvoie fetch
   //pour pouvoir creer les balises HTML qu'il faut en fonction de la taille de l'array
   for (let index = 0; index < listeTravaux.length; index++) {
@@ -58,9 +67,6 @@ function creationContenerFiltre () {
   let portfolioTitle = titles[1]
   //on place la div sous le titre
   portfolioTitle.after(contenerFiltre)
-  return contenerFiltre
 }
 //function filtrage
-function filtrageTravaux () {
-  console.log('hello')
-}
+function filtrageTravaux () {}
