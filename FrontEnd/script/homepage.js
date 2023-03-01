@@ -1,10 +1,13 @@
 window.addEventListener('DOMContentLoaded', async () => {
-  //Recupere la liste des travaux
-  recuperationListeTravaux()
-  //on recupere la liste des catégories
-  creationContenerFiltre()
-  //on recupere la liste des catégories et on creer les bouton
+  //On recupere la liste des travaux
+  const listeTravaux = await recuperationListeTravaux()
+  //on creer la gallerie de travaux
+  creationGallerie(listeTravaux)
+  //on recupere la liste des catégorie
   const listeCategories = await recuperationListeCategories()
+  //on creer un contener pour les filtres
+  creationContenerFiltre()
+  //on creer les boutons filtres
   creationdesFiltres(listeCategories)
 })
 //Recuperation liste categories
@@ -13,9 +16,9 @@ async function recuperationListeCategories () {
   const liste = await reponse.json()
   return liste
 }
-function creationdesFiltres (Categories) {
+function creationdesFiltres (categories) {
   //on boucle sur l'array listecategories pour créer un bouton par categories
-  for (let index = 0; index < Categories.length; index++) {
+  for (let index = 0; index < categories.length; index++) {
     //on selectionne la div qui va contenir les filtres
     let contenerFiltre = document.querySelector('.contenerFiltre')
     //on créer le bouton
@@ -25,7 +28,7 @@ function creationdesFiltres (Categories) {
     //on onjecte la class filtres au differents bouton
     filtre.classList.add('filtres')
     //on place le nom des categories dans les boutons
-    filtre.innerText = Categories[index].name
+    filtre.innerText = categories[index].name
     //on assigne un id a chaque bouton
     //on place des écouteurs d'évenements sur chaque bouton
     filtre.addEventListener('click', function () {
@@ -52,10 +55,13 @@ function filtrage (Categories) {
 async function recuperationListeTravaux () {
   //Faire un fetch pour recuperer la liste des travaux
   let reponse = await fetch('http://localhost:5678/api/works')
-  let listeTravaux = await reponse.json()
+  let liste = await reponse.json()
+  return liste
+}
+function creationGallerie (travaux) {
   //on creer une boucle for sur l'array que nous renvoie fetch
   //pour pouvoir creer les balises HTML qu'il faut en fonction de la taille de l'array
-  for (let index = 0; index < listeTravaux.length; index++) {
+  for (let index = 0; index < travaux.length; index++) {
     let galerie = document.querySelector('.gallery')
     let baliseFigure = document.createElement('figure')
     let baliseImg = document.createElement('img')
@@ -63,8 +69,8 @@ async function recuperationListeTravaux () {
     galerie.appendChild(baliseFigure)
     baliseFigure.appendChild(baliseImg)
     baliseFigure.appendChild(baliseFigcaption)
-    baliseImg.src = listeTravaux[index].imageUrl
-    baliseFigcaption.innerText = listeTravaux[index].title
+    baliseImg.src = travaux[index].imageUrl
+    baliseFigcaption.innerText = travaux[index].title
   }
 }
 //fonction qui génere le contener des boutons filtres
