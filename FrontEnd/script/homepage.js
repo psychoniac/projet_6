@@ -17,10 +17,18 @@ async function recuperationListeCategories () {
   return liste
 }
 function creationdesFiltres (categories) {
+  //on creer un bouton qui sera le bouton filtre par défaut
+  const filtreParDefaut = document.createElement('button')
+  //on selectionne le contener des filtres
+  let contenerFiltre = document.querySelector('.contenerFiltre')
+  //on rattache le bouton filtre par defaut au contener
+  contenerFiltre.appendChild(filtreParDefaut)
+  //on injecte la class filtre au bouton
+  filtreParDefaut.classList.add('filtres')
+  //on lui met un contenu
+  filtreParDefaut.innerText = 'Tous les travaux'
   //on boucle sur l'array listecategories pour créer un bouton par categories
   for (let index = 0; index < categories.length; index++) {
-    //on selectionne la div qui va contenir les filtres
-    let contenerFiltre = document.querySelector('.contenerFiltre')
     //on créer le bouton
     const filtre = document.createElement('button')
     //on place les bouton dans le contener filtres
