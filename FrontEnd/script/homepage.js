@@ -7,6 +7,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   const listeCategories = await recuperationListeCategories()
   //on creer un contener pour les filtres
   creationContenerFiltre()
+  //on creer le bouton filtre par defaut
+  creationFiltreDefaut()
   //on creer les boutons filtres
   creationdesFiltres(listeCategories)
 })
@@ -17,18 +19,10 @@ async function recuperationListeCategories () {
   return liste
 }
 function creationdesFiltres (categories) {
-  //on creer un bouton qui sera le bouton filtre par défaut
-  const filtreParDefaut = document.createElement('button')
-  //on selectionne le contener des filtres
-  let contenerFiltre = document.querySelector('.contenerFiltre')
-  //on rattache le bouton filtre par defaut au contener
-  contenerFiltre.appendChild(filtreParDefaut)
-  //on injecte la class filtre au bouton
-  filtreParDefaut.classList.add('filtres')
-  //on lui met un contenu
-  filtreParDefaut.innerText = 'Tous les travaux'
   //on boucle sur l'array listecategories pour créer un bouton par categories
   for (let index = 0; index < categories.length; index++) {
+    //on selectionne le contener des filtres
+    const contenerFiltre = document.querySelector('.contenerFiltre')
     //on créer le bouton
     const filtre = document.createElement('button')
     //on place les bouton dans le contener filtres
@@ -47,6 +41,7 @@ function creationdesFiltres (categories) {
   listeBoutonFiltres[0].setAttribute('id', 1)
   listeBoutonFiltres[1].setAttribute('id', 2)
   listeBoutonFiltres[2].setAttribute('id', 3)
+  listeBoutonFiltres[3].setAttribute('id', 4)
 }
 /*
 //fonction filtre
@@ -93,4 +88,16 @@ function creationContenerFiltre () {
   let titrePortfolio = titres[1]
   //on place la div sous le titre
   titrePortfolio.after(contenerFiltre)
+}
+function creationFiltreDefaut () {
+  //on creer un bouton qui sera le bouton filtre par défaut
+  const filtreParDefaut = document.createElement('button')
+  //on selectionne le contener des filtres
+  let contenerFiltre = document.querySelector('.contenerFiltre')
+  //on rattache le bouton filtre par defaut au contener
+  contenerFiltre.appendChild(filtreParDefaut)
+  //on injecte la class filtre au bouton
+  filtreParDefaut.classList.add('filtres')
+  //on lui met un contenu
+  filtreParDefaut.innerText = 'Tous les travaux'
 }
