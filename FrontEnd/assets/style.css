@@ -150,6 +150,9 @@ li:hover {
 	width: 100%;
 
 }
+.travaux_inactif{
+	visibility: hidden;
+}
 #contact {
 	width: 50%;
 margin: auto;

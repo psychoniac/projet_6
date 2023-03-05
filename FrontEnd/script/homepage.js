@@ -1,16 +1,17 @@
 window.addEventListener('DOMContentLoaded', async () => {
   //On recupere la liste des travaux
   const listeTravaux = await recuperationListeTravaux()
-  //on creer la gallerie de travaux
-  creationGallerie(listeTravaux)
   //on recupere la liste des catégorie
   const listeCategories = await recuperationListeCategories()
   //on creer un contener pour les filtres
   creationContenerFiltre()
   //on creer le bouton filtre par defaut
-  creationFiltreDefaut()
+  creationFiltreDefaut(listeTravaux)
   //on creer les boutons filtres
-  creationdesFiltres(listeCategories)
+  creationdesFiltres(listeCategories, listeTravaux)
+  //on creer la gallerie de travaux
+  creationGallerie(listeTravaux)
+  filtrage(2, listeTravaux)
 })
 //Recuperation liste categories
 async function recuperationListeCategories () {
@@ -18,7 +19,7 @@ async function recuperationListeCategories () {
   const liste = await reponse.json()
   return liste
 }
-function creationdesFiltres (categories) {
+function creationdesFiltres (categories, travaux) {
   //on boucle sur l'array listecategories pour créer un bouton par categories
   for (let index = 0; index < categories.length; index++) {
     //on selectionne le contener des filtres
@@ -30,30 +31,13 @@ function creationdesFiltres (categories) {
     //on onjecte la class filtres au differents bouton
     filtre.classList.add('filtres')
     //on place le nom des categories dans les boutons
-    filtre.innerText = categories[index].name
-    //on assigne un id a chaque bouton
-    //on place des écouteurs d'évenements sur chaque bouton
-    filtre.addEventListener('click', function () {
-      console.log('hello')
+    filtre.innerText = categories[index].id
+    //on place un ecouteur d'évenement sur chaque bouton filtre
+    filtre.addEventListener('click', function (e) {
+      //fonction a creer pour le filtrage des travaux
     })
   }
-  const listeBoutonFiltres = document.querySelectorAll('.filtres')
-  listeBoutonFiltres[0].setAttribute('id', 1)
-  listeBoutonFiltres[1].setAttribute('id', 2)
-  listeBoutonFiltres[2].setAttribute('id', 3)
-  listeBoutonFiltres[3].setAttribute('id', 4)
 }
-/*
-//fonction filtre
-function filtrage (Categories) {
-  if (Categories[index].id === 1) {
-    console.log('1')
-  } else if (Categories[index].id === 2) {
-    console.log('2')
-  } else if (Categories[index].id === 3) {
-    console.log('3')
-  }
-}*/
 //Recupere la liste des travaux
 async function recuperationListeTravaux () {
   //Faire un fetch pour recuperer la liste des travaux
@@ -89,7 +73,7 @@ function creationContenerFiltre () {
   //on place la div sous le titre
   titrePortfolio.after(contenerFiltre)
 }
-function creationFiltreDefaut () {
+function creationFiltreDefaut (travaux) {
   //on creer un bouton qui sera le bouton filtre par défaut
   const filtreParDefaut = document.createElement('button')
   //on selectionne le contener des filtres
@@ -100,4 +84,14 @@ function creationFiltreDefaut () {
   filtreParDefaut.classList.add('filtres')
   //on lui met un contenu
   filtreParDefaut.innerText = 'Tous les travaux'
+  //on place un ecouteur d'evenements avec la methode filter pour afficher tous les travaux avec un category id different de 0 donc tous
+  filtreParDefaut.addEventListener('click', function () {
+    const galleryDefaut = travaux.filter(travail => {})
+  })
+}
+function filtrage (idBoutonClick, arrtravaux) {
+  let nouveauArrayTravaux = arrtravaux.filter(
+    travail => travail.categoryId == idBoutonClick
+  )
+  console.log(nouveauArrayTravaux)
 }
