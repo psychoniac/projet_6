@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', function () {
   authentification()
 })
+
 function authentification () {
   const formulaireLogin = document.querySelector('#loginForm')
   formulaireLogin.addEventListener('submit', function (e) {
@@ -8,15 +9,17 @@ function authentification () {
     requetePostLogin()
   })
 }
-
+//fonction qui gere la requete
 async function requetePostLogin () {
+  //on place les options de la requete dans un Json
   const formulaireData = {
     email: document.querySelector('#mail').value,
     password: document.querySelector('#password').value
   }
-
   const idUtilisateur = JSON.stringify(formulaireData)
+  //on creer une variable qui va servir à stocker le token
   let token = ''
+  //on creer la requete post en lui passant des options
   const reponse = await fetch('http://localhost:5678/api/users/login', {
     method: 'POST',
     headers: {
@@ -26,16 +29,19 @@ async function requetePostLogin () {
     body: idUtilisateur
   })
   if (reponse.status === 200) {
-    console.log('response ok')
+    //on stocke la reponse du fetch
     let resultat = await reponse.json()
+    //on recupere le token pour le stocker dans le local storage
     let userToken = JSON.stringify(resultat)
     localStorage.setItem('token', `${userToken}`)
-    // document.location.href = './index.html'
-    console.log(localStorage)
+    //on redirige vers la page accueil
+    document.location.href = './index.html'
   } else {
+    //si la reponse du serveur n'est pas 200 alors on declenche la fonction erreur
     erreurMessage(reponse)
   }
 }
+//function qui gere l'erreur
 function erreurMessage (reponseRequete) {
   if (reponseRequete.status != 200) {
     alert(reponseRequete.status)

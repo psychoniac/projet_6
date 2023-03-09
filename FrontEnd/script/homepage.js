@@ -3,15 +3,15 @@ window.addEventListener('DOMContentLoaded', async () => {
   const listeTravaux = await recuperationListeTravaux()
   //on recupere la liste des catégorie
   const listeCategories = await recuperationListeCategories()
-  //on creer un contener pour les filtres
+  //on cree la gallerie de base
   creationGallerie(listeTravaux)
+  //on creer un contener pour les filtres
   creationContenerFiltre()
   //on creer le bouton filtre par defaut
   creationFiltreDefaut()
   //on creer les boutons filtres
   creationdesFiltres(listeCategories)
   ecouteurBoutton(listeTravaux)
-  //on creer la gallerie de travaux
 })
 //Recuperation liste categories
 async function recuperationListeCategories () {
@@ -44,19 +44,19 @@ function ecouteurBoutton (arrTravaux) {
         creationGallerie(arrTravaux)
       } else if (i == 1) {
         const arrTravauxFiltreObjet = arrTravaux.filter(
-          travail => travail.categoryId == 1
+          travail => travail.categoryId == i
         )
         gallerie.innerHTML = ''
         creationGallerie(arrTravauxFiltreObjet)
       } else if (i == 2) {
         const arrTravauxFiltreAppart = arrTravaux.filter(
-          travail => travail.categoryId == 2
+          travail => travail.categoryId == i
         )
         gallerie.innerHTML = ''
         creationGallerie(arrTravauxFiltreAppart)
       } else if (i == 3) {
         const arrTravauxFiltreHotel = arrTravaux.filter(
-          travail => travail.categoryId == 3
+          travail => travail.categoryId == i
         )
 
         gallerie.innerHTML = ''
