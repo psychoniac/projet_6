@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', function () {
-  authentification()
+  const reponse = authentification()
 })
 
 function authentification () {
@@ -38,12 +38,18 @@ async function requetePostLogin () {
     document.location.href = './index.html'
   } else {
     //si la reponse du serveur n'est pas 200 alors on declenche la fonction erreur
-    erreurMessage(reponse)
+    //erreurMessage(reponse)
+    modaleErreur(reponse.status)
   }
-}
+} /*
 //function qui gere l'erreur
 function erreurMessage (reponseRequete) {
-  if (reponseRequete.status != 200) {
-    alert(reponseRequete.status)
+  if (reponseRequete.status === 401) {
+    alert("L'utilisateur n'est pas autorisé")
   }
+}*/
+//function qui créer une modale pour les erreurs
+function modaleErreur (reponseRequete) {
+  const modalErreur = document.getElementById('#modalErreur')
+  console.log(reponseRequete)
 }

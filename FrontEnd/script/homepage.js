@@ -12,6 +12,10 @@ window.addEventListener('DOMContentLoaded', async () => {
   //on creer les boutons filtres
   creationdesFiltres(listeCategories)
   ecouteurBoutton(listeTravaux)
+  //modification de la homepage une fois connecter
+  boutonModifier()
+  genererModalVide()
+  contenuModal(listeTravaux)
 })
 //Recuperation liste categories
 async function recuperationListeCategories () {
@@ -42,25 +46,12 @@ function ecouteurBoutton (arrTravaux) {
       if (i == 0) {
         gallerie.innerHTML = ''
         creationGallerie(arrTravaux)
-      } else if (i == 1) {
-        const arrTravauxFiltreObjet = arrTravaux.filter(
+      } else {
+        const arrTravauxFiltrer = arrTravaux.filter(
           travail => travail.categoryId == i
         )
         gallerie.innerHTML = ''
-        creationGallerie(arrTravauxFiltreObjet)
-      } else if (i == 2) {
-        const arrTravauxFiltreAppart = arrTravaux.filter(
-          travail => travail.categoryId == i
-        )
-        gallerie.innerHTML = ''
-        creationGallerie(arrTravauxFiltreAppart)
-      } else if (i == 3) {
-        const arrTravauxFiltreHotel = arrTravaux.filter(
-          travail => travail.categoryId == i
-        )
-
-        gallerie.innerHTML = ''
-        creationGallerie(arrTravauxFiltreHotel)
+        creationGallerie(arrTravauxFiltrer)
       }
     })
   }
@@ -111,4 +102,52 @@ function creationFiltreDefaut () {
   filtreParDefaut.classList.add('filtres')
   //on lui met un contenu
   filtreParDefaut.innerText = 'Tous les travaux'
+}
+// mode mode_edition
+function creationModeEdition () {
+  const homepageConnecter = document.querySelector('.contener')
+  const contenerModeEdition = document.createElement('div')
+  const header = document.querySelector('header')
+  homepageConnecter.append(contenerModeEdition)
+  contenerModeEdition.classList.add('mode_edition')
+}
+//creation des boutons modifier
+function boutonModifier () {
+  const buttonModifier = document.createElement('button')
+  const imageHeader = document.querySelector('#introduction')
+  imageHeader.after(buttonModifier)
+  buttonModifier.innerText = 'Modifier'
+  buttonModifier.classList.add('boutonModifier')
+  buttonModifier.addEventListener('click', function () {
+    genererModalVide()
+  })
+}
+//on creer le overlay de la modal
+function genererModalVide () {
+  const contenerModal = document.querySelector('#contener')
+  const overlay = document.createElement('div')
+  const modal = document.createElement('div')
+  const fermetureModal = document.createElement('button')
+  overlay.classList.add('overlay_modal')
+  modal.classList.add('modal_contener')
+  fermetureModal.classList.add('closed_modal')
+  fermetureModal.innerText = 'X'
+  contenerModal.append(overlay)
+  contenerModal.append(modal)
+  modal.append(fermetureModal)
+  fermetureModal.addEventListener('click', function () {
+    modal.classList.add('inactif')
+    overlay.classList.add('inactif')
+    fermetureModal.classList.add('inactif')
+  })
+}
+//remplissage de la modal
+function contenuModal (listeTravaux) {
+  const contenerImage = document.querySelector('.modal_contener')
+  for (let i = 0; i < listeTravaux.lenght; i++) {
+    const imageTravail = document.createElement('img')
+    contenerImage.appendChild(imageTravail)
+    imageTravail.src = listeTravaux[i].imageUrl
+    imageTravail.classList.add('imageGallerie_modal')
+  }
 }
