@@ -1,9 +1,9 @@
 /**
  * création de la gallery des works 
  */
-async function createGallery(){
-    const arrayWorks = await getWorks()
-    console.log(arrayWorks)
+async function createGallery(arrayWorks){
+   // const arrayWorks = await getWorks()
+   // console.log(arrayWorks)
     //création gallerie works
     const gallery = document.querySelector(".gallery")
     arrayWorks.map((work) => {
@@ -18,11 +18,8 @@ async function createGallery(){
     })
     //creation des boutons filtres 
     const contenerFilter = document.getElementById("filters")
-    console.log(contenerFilter)
-    
-
 }
-createGallery()
+//createGallery()
 async function createButtonFilter(){
     const arrayCategory = await getCategory()
     const contenerFilters = document.getElementById("filters")
@@ -32,6 +29,21 @@ async function createButtonFilter(){
         buttonFilter.id = category.id
         buttonFilter.textContent = category.name
         contenerFilters.appendChild(buttonFilter)
+        buttonFilter.addEventListener("click", (e)=>{
+            
+            createGalleryFiltered(e.currentTarget.id)
+        })
     })
 }
 createButtonFilter()
+//creer la gallerie en fonction de l'id categorie 
+async function createGalleryFiltered(categoryId){
+    const arrayWorks = await getWorks()
+   const arrayWorksFiltered = arrayWorks.filter(function(work){
+        return work.categoryId == categoryId
+    })
+    
+    const gallery = document.querySelector(".gallery")
+    gallery.innerHTML = ""
+    createGallery(arrayWorksFiltered)
+}
